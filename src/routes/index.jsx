@@ -112,6 +112,11 @@ import CategoriesList from "../page/categories/List";
 import CategoriesAdd from "../page/categories/Add";
 import CategoriesEdit from "../page/categories/Edit";
 
+//acteursImport
+import ActeursList from "../page/acteurs/List";
+import ActeursAdd from "../page/acteurs/Add";
+import ActeursEdit from "../page/acteurs/Edit";
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -198,6 +203,11 @@ const authProtectedRoutes = [
   { path: "/categoriesList", component: <CategoriesList /> },
   { path: "/categoriesAdd", component: <CategoriesAdd /> },
   { path: "/categoriesEdit/:id", component: <CategoriesEdit /> },
+
+  //acteurs:
+  { path: "/acteursList", component: <ActeursList /> },
+  { path: "/acteursAdd", component: <ActeursAdd /> },
+  { path: "/acteursEdit/:id", component: <ActeursEdit /> },
 ];
 
 const publicRoutes = [

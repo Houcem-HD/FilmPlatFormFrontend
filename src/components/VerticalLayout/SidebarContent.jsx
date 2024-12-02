@@ -160,6 +160,12 @@ const SidebarContent = (props) => {
                 <span>{props.t("Categorie")}</span>
               </Link>
             </li>
+            <li>
+              <Link to="/acteursList">
+                <i className="bx bx-user"></i>
+                <span>{props.t("Acteurs")}</span>
+              </Link>
+            </li>
 
 
             <li className="menu-title">{props.t("Apps")}</li>
