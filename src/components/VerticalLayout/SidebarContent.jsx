@@ -162,8 +162,32 @@ const SidebarContent = (props) => {
             </li>
             <li>
               <Link to="/acteursList">
-                <i className="bx bx-user"></i>
+                <i className="bx bx-star"></i>
                 <span>{props.t("Acteurs")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/editeursList">
+                <i className="bx bx-camera"></i>
+                <span>{props.t("Editeur")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/languesList">
+                <i className="bx bx-book"></i>
+                <span>{props.t("Langue")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/realisateursList">
+                <i className="bx bx-user"></i>
+                <span>{props.t("Realisateur")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/filmsList">
+                <i className="bx bx-film"></i>
+                <span>{props.t("Film")}</span>
               </Link>
             </li>
 

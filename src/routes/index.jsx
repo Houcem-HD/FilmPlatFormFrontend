@@ -117,6 +117,26 @@ import ActeursList from "../page/acteurs/List";
 import ActeursAdd from "../page/acteurs/Add";
 import ActeursEdit from "../page/acteurs/Edit";
 
+//editeurImport
+import EditeurList from "../page/editeurs/List";
+import EditeurAdd from "../page/editeurs/Add";
+import EditeurEdit from "../page/editeurs/Edit";
+
+//languesImport
+import LanguesList from "../page/langues/List";
+import LanguesAdd from "../page/langues/Add";
+import LanguesEdit from "../page/langues/Edit";
+
+//realisateurImport
+import RealisateursList from "../page/realisateurs/List";
+import RealisateursAdd from "../page/realisateurs/Add";
+import RealisateursEdit from "../page/realisateurs/Edit";
+
+//filmImport
+import FilmsList from "../page/films/List";
+import FilmsAdd from "../page/films/Add";
+import FilmsEdit from "../page/films/Edit";
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
 
@@ -208,6 +228,26 @@ const authProtectedRoutes = [
   { path: "/acteursList", component: <ActeursList /> },
   { path: "/acteursAdd", component: <ActeursAdd /> },
   { path: "/acteursEdit/:id", component: <ActeursEdit /> },
+
+  //editeur:
+  { path: "/editeursList", component: <EditeurList /> },
+  { path: "/editeursAdd", component: <EditeurAdd /> },
+  { path: "/editeursEdit/:id", component: <EditeurEdit /> },
+
+  //langues:
+  { path: "/languesList", component: <LanguesList /> },
+  { path: "/languesAdd", component: <LanguesAdd /> },
+  { path: "/languesEdit/:id", component: <LanguesEdit /> },
+  
+  //realisateurs:
+  { path: "/realisateursList", component: <RealisateursList /> },
+  { path: "/realisateursAdd", component: <RealisateursAdd /> },
+  { path: "/realisateursEdit/:id", component: <RealisateursEdit /> },
+
+  //films:
+  { path: "/filmsList", component: <FilmsList /> },
+  { path: "/filmsAdd", component: <FilmsAdd /> },
+  { path: "/filmsEdit/:id", component: <FilmsEdit /> },
 ];
 
 const publicRoutes = [
