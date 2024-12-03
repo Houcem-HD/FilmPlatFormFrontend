@@ -1,132 +1,232 @@
-import React, { useMemo, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom"; // Import Link
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-// Import components
-import Breadcrumbs from "../../components/Common/Breadcrumb";
-import TableContainer from "../../components/Common/TableContainer";
+const AddFilm = () => {
+  const navigate = useNavigate();
+  
+  const [filmData, setFilmData] = useState({
+    nom: '',
+    description: '',
+    date_created: '',
+    duree: '',
+    prix: '',
+    poster: null,
+    id_categorie: '',
+    id_acteur_principal: '',
+    id_acteur_secondaire: '',
+    id_editeur: '',
+    id_langue: '',
+    id_realisateur: '',
+  });
 
-const DatatableTables = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Fetch data using Axios
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/langue");
-        setData(response.data); // Assuming the API returns an array of records
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilmData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFilmData((prevData) => ({
+      ...prevData,
+      [name]: files[0], // assuming only one file is being uploaded
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    const formData = new FormData();
+    
+    // Append all form data to the FormData object, including the file
+    for (const key in filmData) {
+      if (filmData[key] !== null) {
+        if (key === 'poster' && filmData[key] !== null) {
+          formData.append(key, filmData[key], filmData[key].name);  // Ensure file is appended with a filename
+        } else {
+          formData.append(key, filmData[key]);
+        }
       }
-    };
+    }
 
-    fetchData();
-  }, []);
-
-  const handleDelete = async (id) => {
     try {
-      // Perform delete request
-      const response = await axios.delete(`http://127.0.0.1:8000/api/langue/${id}`);
+      const response = await axios.post("http://sitehd.soft-liberty.com/api/film", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      if (response.status === 204) {
-        // Remove the deleted item from the state
-        setData((prevData) => prevData.filter((item) => item.id !== id));
-      }
-    } catch (error) {
-      console.error("Error deleting Editor:", error);
+      // Redirect to the films list after success
+      navigate("/filmsList");
+
+    } catch (err) {
+      setError("Error while adding the film.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const columns = useMemo(
-    () => [
-      {
-        header: "id",
-        accessorKey: "id",
-        enableColumnFilter: false,
-        enableSorting: true,
-      },
-      {
-        header: "langues",
-        accessorKey: "langues",
-        enableColumnFilter: false,
-        enableSorting: true,
-      },
-      {
-        header: "created_at",
-        accessorKey: "created_at",
-        enableColumnFilter: false,
-        enableSorting: true,
-      },
-      {
-        header: "updated_at",
-        accessorKey: "updated_at",
-        enableColumnFilter: false,
-        enableSorting: true,
-      },
-      {
-        header: "actions",
-        accessorKey: "actions",
-        enableColumnFilter: false,
-        enableSorting: false,
-        cell: ({ row }) => (
-          <div>
-            {/* Edit Button */}
-            <Link to={`/languesEdit/${row.original.id}`} className="btn btn-primary mr-2 bx bx-edit"></Link>
-
-            {/* Delete Button */}
-            <button
-              onClick={() => handleDelete(row.original.id)}
-              className="btn btn-danger bx bx-trash"
-              title="Delete"
-            >
-            </button>
-          </div>
-        ),
-      },
-    ],
-    []
-  );
-
-  // Meta title
-  document.title = "List Langues";
-
   return (
-    <div className="page-content">
-      <div className="container-fluid">
-        <Breadcrumbs title="Tables" breadcrumbItem="Data Tables" />
-        
-        {/* Add Button Link */}
-        <div className="mb-4">
-          <Link to="/languesAdd" className="btn btn-primary">
-            Add Language
-          </Link>
+    <div className="container">
+      <h2>Add New Film</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="nom">Film Name</label>
+          <input
+            type="text"
+            name="nom"
+            value={filmData.nom}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
         </div>
 
-        {loading ? (
-          <p>Loading data...</p>
-        ) : (
-          <TableContainer
-            columns={columns}
-            data={data || []}
-            isGlobalFilter={true}
-            isPagination={true}
-            SearchPlaceholder="Search records..."
-            pagination="pagination"
-            paginationWrapper="dataTables_paginate paging_simple_numbers"
-            tableClass="table-bordered table-nowrap dt-responsive nowrap w-100 dataTable no-footer dtr-inline"
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            name="description"
+            value={filmData.description}
+            onChange={handleChange}
+            required
+            className="form-control"
           />
-        )}
-      </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="date_created">Date Created</label>
+          <input
+            type="number"
+            name="date_created"
+            value={filmData.date_created}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="duree">Duration</label>
+          <input
+            type="number"
+            name="duree"
+            value={filmData.duree}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="prix">Price</label>
+          <input
+            type="number"
+            name="prix"
+            value={filmData.prix}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="poster">Poster Image</label>
+          <input
+            type="file"
+            name="poster"
+            onChange={handleFileChange}
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="id_categorie">Category</label>
+          <input
+            type="text"
+            name="id_categorie"
+            value={filmData.id_categorie}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="id_acteur_principal">Main Actor</label>
+          <input
+            type="text"
+            name="id_acteur_principal"
+            value={filmData.id_acteur_principal}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="id_acteur_secondaire">Secondary Actor</label>
+          <input
+            type="text"
+            name="id_acteur_secondaire"
+            value={filmData.id_acteur_secondaire}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="id_editeur">Publisher</label>
+          <input
+            type="text"
+            name="id_editeur"
+            value={filmData.id_editeur}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="id_langue">Language</label>
+          <input
+            type="text"
+            name="id_langue"
+            value={filmData.id_langue}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="id_realisateur">Director</label>
+          <input
+            type="text"
+            name="id_realisateur"
+            value={filmData.id_realisateur}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+
+        <button type="submit" disabled={loading} className="btn btn-primary">
+          {loading ? "Adding..." : "Add Film"}
+        </button>
+        {error && <p className="text-danger">{error}</p>}
+      </form>
     </div>
   );
 };
 
-DatatableTables.propTypes = {
-  preGlobalFilteredRows: PropTypes.any,
-};
-
-export default DatatableTables;
+export default AddFilm;

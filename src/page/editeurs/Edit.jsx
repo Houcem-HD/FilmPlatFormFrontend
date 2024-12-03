@@ -22,7 +22,7 @@ const EditActeurForm = () => {
   useEffect(() => {
     const fetchActorData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/editeur/${id}`);
+        const response = await axios.get(`http://sitehd.soft-liberty.com/api/editeur/${id}`);
         const { nom, prenom, nationalite, date_naissance } = response.data;
         setNom(nom);
         setPrenom(prenom);
@@ -44,7 +44,7 @@ const EditActeurForm = () => {
     setError(null);
 
     try {
-      const response = await axios.put(`http://127.0.0.1:8000/api/editeur/${id}`, {
+      const response = await axios.put(`http://sitehd.soft-liberty.com/api/editeur/${id}`, {
         nom,
         prenom,
         nationalite,

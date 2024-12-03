@@ -18,7 +18,7 @@ const EditCategory = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/categorie/${id}`);
+        const response = await axios.get(`http://sitehd.soft-liberty.com/api/categorie/${id}`);
         setCategory(response.data); // Assuming the API returns a category object
       } catch (error) {
         console.error("Error fetching category data:", error);
@@ -36,7 +36,7 @@ const EditCategory = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://127.0.0.1:8000/api/categorie/${id}`, category);
+      const response = await axios.put(`http://sitehd.soft-liberty.com/api/categorie/${id}`, category);
       if (response.status === 200) {
         alert("Category updated successfully");
         navigate("/categoriesList"); // Redirect to the categories list page after successful update

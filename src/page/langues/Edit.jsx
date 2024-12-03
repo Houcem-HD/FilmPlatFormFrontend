@@ -23,7 +23,7 @@ const EditLangue = () => {
   useEffect(() => {
     const fetchLangue = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/langue/${id}`);
+        const response = await axios.get(`http://sitehd.soft-liberty.com/api/langue/${id}`);
         if (response.status === 200) {
           setLangues(response.data.langues); // Assuming the API returns an object with 'langues'
         } else {
@@ -47,7 +47,7 @@ const EditLangue = () => {
     setError(null);
 
     try {
-      const response = await axios.put(`http://127.0.0.1:8000/api/langue/${id}`, {
+      const response = await axios.put(`http://sitehd.soft-liberty.com/api/langue/${id}`, {
         langues,
       });
 

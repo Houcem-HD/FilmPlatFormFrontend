@@ -43,7 +43,7 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await Axios.post("http://127.0.0.1:8000/api/login", values); // Laravel login endpoint
+        const response = await Axios.post("http://sitehd.soft-liberty.com/api/login", values); // Laravel login endpoint
         console.log("Response Data:", response.data);
         // Store the token or user data if needed
         if (response.status === 200 && response.data.token) {

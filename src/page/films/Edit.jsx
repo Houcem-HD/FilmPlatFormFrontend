@@ -15,7 +15,7 @@ const DatatableTables = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/langue");
+        const response = await axios.get("http://sitehd.soft-liberty.com/api/langue");
         setData(response.data); // Assuming the API returns an array of records
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -30,7 +30,7 @@ const DatatableTables = () => {
   const handleDelete = async (id) => {
     try {
       // Perform delete request
-      const response = await axios.delete(`http://127.0.0.1:8000/api/langue/${id}`);
+      const response = await axios.delete(`http://sitehd.soft-liberty.com/api/langue/${id}`);
 
       if (response.status === 204) {
         // Remove the deleted item from the state

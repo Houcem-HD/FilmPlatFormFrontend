@@ -184,6 +184,7 @@ const SidebarContent = (props) => {
                 <span>{props.t("Realisateur")}</span>
               </Link>
             </li>
+            <li className="menu-title">{props.t("Films")}</li>
             <li>
               <Link to="/filmsList">
                 <i className="bx bx-film"></i>

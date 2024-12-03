@@ -43,7 +43,7 @@ const Register = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      Axios.post("http://127.0.0.1:8000/api/adduser", values) // Replace with your register endpoint
+      Axios.post("http://sitehd.soft-liberty.com/api/adduser", values) // Replace with your register endpoint
         .then((response) => {
           if (response.status == 200) {
             console.log("success");
