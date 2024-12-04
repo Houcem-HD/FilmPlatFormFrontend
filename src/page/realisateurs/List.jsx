@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom"; // Import Link
-import axios from "axios";
+import axios from '../../plugins/axios';
 
 // Import components
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -15,7 +15,7 @@ const DatatableTables = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://sitehd.soft-liberty.com/api/realisateur");
+        const response = await axios.get("realisateur");
         setData(response.data); // Assuming the API returns an array of records
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -30,7 +30,7 @@ const DatatableTables = () => {
   const handleDelete = async (id) => {
     try {
       // Perform delete request
-      const response = await axios.delete(`http://sitehd.soft-liberty.com/api/realisateur/${id}`);
+      const response = await axios.delete(`realisateur/${id}`);
 
       if (response.status === 204) {
         // Remove the deleted item from the state

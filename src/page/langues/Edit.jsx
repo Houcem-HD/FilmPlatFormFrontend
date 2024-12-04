@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Col, Row, Container } from "reactstrap";
-import axios from "axios";
+import axios from '../../plugins/axios';
 import { useNavigate, useParams } from "react-router-dom";
 
 // Import Breadcrumb
@@ -23,7 +23,7 @@ const EditLangue = () => {
   useEffect(() => {
     const fetchLangue = async () => {
       try {
-        const response = await axios.get(`http://sitehd.soft-liberty.com/api/langue/${id}`);
+        const response = await axios.get(`langue/${id}`);
         if (response.status === 200) {
           setLangues(response.data.langues); // Assuming the API returns an object with 'langues'
         } else {
@@ -47,7 +47,7 @@ const EditLangue = () => {
     setError(null);
 
     try {
-      const response = await axios.put(`http://sitehd.soft-liberty.com/api/langue/${id}`, {
+      const response = await axios.put(`langue/${id}`, {
         langues,
       });
 

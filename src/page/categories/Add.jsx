@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardBody, Col, Row, Container } from "reactstrap";
-import axios from "axios";
+import axios from '../../plugins/axios';
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 // Import Breadcrumb
@@ -24,7 +24,7 @@ const FormElements = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://sitehd.soft-liberty.com/api/categorie", {
+      const response = await axios.post("categorie", {
         nom: categoryName,
       });
 

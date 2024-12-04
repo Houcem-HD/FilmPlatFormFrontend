@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardBody, Col, Row, Container } from "reactstrap";
-import axios from "axios";
+import axios from '../../plugins/axios';
 import { useNavigate } from "react-router-dom";
 
 // Import Breadcrumb
@@ -24,7 +24,7 @@ const LangueForm = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://sitehd.soft-liberty.com/api/langue", {
+      const response = await axios.post("langue", {
         langues,
       });
 

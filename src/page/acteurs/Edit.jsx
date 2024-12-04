@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardBody, Col, Row, Container } from "reactstrap";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate and useParams
+
+import axios from '../../plugins/axios';
 
 // Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -22,7 +23,7 @@ const EditActeurForm = () => {
   useEffect(() => {
     const fetchActorData = async () => {
       try {
-        const response = await axios.get(`http://sitehd.soft-liberty.com/api/acteur/${id}`);
+        const response = await axios.get(`acteur/${id}`);
         const { nom, prenom, nationalite, date_naissance } = response.data;
         setNom(nom);
         setPrenom(prenom);
@@ -44,7 +45,7 @@ const EditActeurForm = () => {
     setError(null);
 
     try {
-      const response = await axios.put(`http://sitehd.soft-liberty.com/api/acteur/${id}`, {
+      const response = await axios.put(`acteur/${id}`, {
         nom,
         prenom,
         nationalite,

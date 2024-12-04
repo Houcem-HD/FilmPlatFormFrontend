@@ -15,7 +15,7 @@ const DatatableTables = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("film");
+        const response = await axios.get("users");
         setData(response.data); // Assuming the API returns an array of records
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -30,9 +30,9 @@ const DatatableTables = () => {
   const handleDelete = async (id) => {
     try {
       // Perform delete request
-      const response = await axios.delete(`film/${id}`);
+      const response = await axios.delete(`users/${id}`);
 
-      if (response.status === 204) {
+      if (response.status === 200) {
         // Remove the deleted item from the state
         setData((prevData) => prevData.filter((item) => item.id !== id));
       }
@@ -50,26 +50,20 @@ const DatatableTables = () => {
         enableSorting: true,
       },
       {
-        header: "nom",
-        accessorKey: "nom",
+        header: "name",
+        accessorKey: "name",
         enableColumnFilter: false,
         enableSorting: true,
       },
       {
-        header: "description",
-        accessorKey: "description",
+        header: "email",
+        accessorKey: "email",
         enableColumnFilter: false,
         enableSorting: true,
       },
       {
-        header: "date_created",
-        accessorKey: "date_created",
-        enableColumnFilter: false,
-        enableSorting: true,
-      },
-      {
-        header: "duree en minute",
-        accessorKey: "duree",
+        header: "type",
+        accessorKey: "type",
         enableColumnFilter: false,
         enableSorting: true,
       },
@@ -93,7 +87,7 @@ const DatatableTables = () => {
         cell: ({ row }) => (
           <div>
             {/* Edit Button */}
-            <Link to={`/filmsEdit/${row.original.id}`} className="btn btn-primary mr-2 bx bx-edit"></Link>
+            <Link to={`/usersEdit/${row.original.id}`} className="btn btn-primary mr-2 bx bx-edit"></Link>
 
             {/* Delete Button */}
             <button
@@ -119,8 +113,8 @@ const DatatableTables = () => {
         
         {/* Add Button Link */}
         <div className="mb-4">
-          <Link to="/filmsAdd" className="btn btn-primary">
-            Add Language
+          <Link to="/usersAdd" className="btn btn-primary">
+            Add User
           </Link>
         </div>
 

@@ -1,11 +1,12 @@
 import React, { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom"; // Import Link
-import axios from "axios";
 
 // Import components
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import TableContainer from "../../components/Common/TableContainer";
+
+import axios from '../../plugins/axios';
 
 const DatatableTables = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ const DatatableTables = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://sitehd.soft-liberty.com/api/acteur");
+        const response = await axios.get("acteur");
         setData(response.data); // Assuming the API returns an array of records
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -30,7 +31,7 @@ const DatatableTables = () => {
   const handleDelete = async (id) => {
     try {
       // Perform delete request
-      const response = await axios.delete(`http://sitehd.soft-liberty.com/api/acteur/${id}`);
+      const response = await axios.delete(`acteur/${id}`);
 
       if (response.status === 204) {
         // Remove the deleted item from the state

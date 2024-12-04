@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Card, CardBody, Col, Row, Container } from "reactstrap";
-import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+
+import axios from '../../plugins/axios';
 
 // Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
@@ -27,7 +28,7 @@ const ActeurForm = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://sitehd.soft-liberty.com/api/acteur", {
+      const response = await axios.post("acteur", {
         nom,
         prenom,
         nationalite,

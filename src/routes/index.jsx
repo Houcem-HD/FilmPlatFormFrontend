@@ -132,10 +132,17 @@ import RealisateursList from "../page/realisateurs/List";
 import RealisateursAdd from "../page/realisateurs/Add";
 import RealisateursEdit from "../page/realisateurs/Edit";
 
+//filmUserImport
+import FilmsListUser from "../page/filmsUser/ListUser";
 //filmImport
 import FilmsList from "../page/films/List";
 import FilmsAdd from "../page/films/Add";
 import FilmsEdit from "../page/films/Edit";
+
+//userImport
+import UserList from "../page/users/List";
+import UserAdd from "../page/users/Add";
+import UserEdit from "../page/users/Edit";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -244,10 +251,17 @@ const authProtectedRoutes = [
   { path: "/realisateursAdd", component: <RealisateursAdd /> },
   { path: "/realisateursEdit/:id", component: <RealisateursEdit /> },
 
+  //filmsUser:
+  { path: "/filmsList", component: <FilmsListUser /> },
   //films:
-  { path: "/filmsList", component: <FilmsList /> },
+  { path: "/filmsListAdmin", component: <FilmsList /> },
   { path: "/filmsAdd", component: <FilmsAdd /> },
   { path: "/filmsEdit/:id", component: <FilmsEdit /> },
+
+  //users:
+  { path: "/usersList", component: <UserList /> },
+  { path: "/usersAdd", component: <UserAdd /> },
+  { path: "/usersEdit/:id", component: <UserEdit /> },
 ];
 
 const publicRoutes = [

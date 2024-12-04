@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Col, Row, Container } from "reactstrap";
-import axios from "axios";
+import axios from '../../plugins/axios';
 import { useNavigate, useParams } from "react-router-dom"; // Import useParams for dynamic routing
 
 // Import Breadcrumb
@@ -23,7 +23,7 @@ const EditRealisateur = () => {
   useEffect(() => {
     const fetchRealisateur = async () => {
       try {
-        const response = await axios.get(`http://sitehd.soft-liberty.com/api/realisateur/${id}`);
+        const response = await axios.get(`realisateur/${id}`);
         if (response.status === 200) {
           setName(response.data.nom); // Populate the name field with existing data
         } else {
@@ -47,7 +47,7 @@ const EditRealisateur = () => {
     setError(null);
 
     try {
-      const response = await axios.put(`http://sitehd.soft-liberty.com/api/realisateur/${id}`, {
+      const response = await axios.put(`realisateur/${id}`, {
         nom: name,
       });
 
