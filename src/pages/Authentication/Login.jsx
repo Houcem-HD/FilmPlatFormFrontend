@@ -43,12 +43,13 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await Axios.post("http://sitehd.soft-liberty.com/api/login", values); // Laravel login endpoint
+        const response = await Axios.post("http://localhost:8000/api/login", values); // Laravel login endpoint
         console.log("Response Data:", response.data);
         // Store the token or user data if needed
         if (response.status === 200 && response.data.token) {
           localStorage.setItem("token", response.data.token);
-          navigate("/ecommerce-products");
+          localStorage.setItem("User", JSON.stringify(response.data.user)); // Store the user data
+          navigate("/filmsList");
         }else {
           console.error("No token found in the response.");
         }

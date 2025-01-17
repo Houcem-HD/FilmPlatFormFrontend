@@ -134,6 +134,7 @@ import RealisateursEdit from "../page/realisateurs/Edit";
 
 //filmUserImport
 import FilmsListUser from "../page/filmsUser/ListUser";
+import FilmUser from "../page/filmsUser/FilmUser";
 //filmImport
 import FilmsList from "../page/films/List";
 import FilmsAdd from "../page/films/Add";
@@ -253,6 +254,7 @@ const authProtectedRoutes = [
 
   //filmsUser:
   { path: "/filmsList", component: <FilmsListUser /> },
+  { path: "/film/:id", component: <FilmUser /> },
   //films:
   { path: "/filmsListAdmin", component: <FilmsList /> },
   { path: "/filmsAdd", component: <FilmsAdd /> },

@@ -84,7 +84,7 @@ const FilmsList = () => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Ecommerce" breadcrumbItem="Films" />
+          <Breadcrumbs title="Films" breadcrumbItem="Films" />
           <Row className="mb-3">
             <Col xl={4} sm={6}>
               <div className="mt-2">
@@ -138,7 +138,7 @@ const FilmsList = () => {
                   <Col xl={4} sm={6} key={"_col_" + key}>
                     <Card
                       onClick={() =>
-                        navigate(`/ecommerce-product-detail/${film.id}`)
+                        navigate(`/film/${film.id}`)
                       }
                     >
                       <CardBody>

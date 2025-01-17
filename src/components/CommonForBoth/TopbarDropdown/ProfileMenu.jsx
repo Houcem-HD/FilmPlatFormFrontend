@@ -14,7 +14,7 @@ import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import withRouter from "../../Common/withRouter";
-
+import axios from '../../../plugins/axios';
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
 
@@ -22,7 +22,14 @@ const ProfileMenu = (props) => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
 
-  const [username, setusername] = useState("Admin");
+  const data = localStorage.getItem('authUser');
+  console.log(data);
+  const parsedData = JSON.parse(data);
+  const nameUser = parsedData.name;
+  console.log(nameUser);
+
+  const [username, setusername] = useState(nameUser);
+
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
@@ -64,19 +71,6 @@ const ProfileMenu = (props) => {
             {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
             {props.t("Profile")}{" "}
-          </DropdownItem>
-          <DropdownItem tag="a" href="/crypto-wallet">
-            <i className="bx bx-wallet font-size-16 align-middle me-1" />
-            {props.t("My Wallet")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="#">
-            <span className="badge bg-success float-end">11</span>
-            <i className="bx bx-wrench font-size-16 align-middle me-1" />
-            {props.t("Settings")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="auth-lock-screen">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-            {props.t("Lock screen")}
           </DropdownItem>
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">
