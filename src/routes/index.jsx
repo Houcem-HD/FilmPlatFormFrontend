@@ -146,6 +146,7 @@ import UserAdd from "../page/users/Add";
 import UserEdit from "../page/users/Edit";
 
 const authProtectedRoutes = [
+  
   { path: "/dashboard", component: <Dashboard /> },
 
   //   // //profile
@@ -224,7 +225,7 @@ const authProtectedRoutes = [
   { path: "/ui-toasts", component: <UiToasts /> },
   { path: "/ui-utilities", component: <UiUtilities /> },
 
-  { path: "/", exact: true, component: <Navigate to="/login" /> },
+  { path: "/", exact: true, component: <Navigate to="/pages-login-2" /> },
 
   //add
   //categories:

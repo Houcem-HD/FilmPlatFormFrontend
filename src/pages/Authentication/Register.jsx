@@ -14,7 +14,7 @@ import { createSelector } from "reselect";
 
 import { Link, Route } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import Axios from "axios";
+import axios from '../../plugins/axios';
 
 // import images
 import profileImg from "../../assets/images/profile-img.png";
@@ -43,11 +43,11 @@ const Register = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      Axios.post("http://sitehd.soft-liberty.com/api/adduser", values) // Replace with your register endpoint
+      axios.post("adduser", values) // Replace with your register endpoint
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status == 201) {
             console.log("success");
-            navigate("/login"); // Redirect to the dashboard after successful registration
+            navigate("/pages-login-2"); // Redirect to the dashboard after successful registration
           }
         })
         .catch((error) => {
@@ -219,7 +219,7 @@ const Register = () => {
               <div className="mt-5 text-center">
                 <p>
                   Already have an account ?{" "}
-                  <Link to="/login" className="font-weight-medium text-primary">
+                  <Link to="/pages-login-2" className="font-weight-medium text-primary">
                     {" "}
                     Login
                   </Link>{" "}

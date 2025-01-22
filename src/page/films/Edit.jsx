@@ -79,7 +79,7 @@ const EditFilm = () => {
 
     const payload = new FormData();
     for (let key in formData) {
-      if (formData[key] !== null) { // Avoid appending null values
+      if (formData[key] !== null && formData[key] !== "") { // Avoid appending null or empty values
         payload.append(key, formData[key]);
       }
     }

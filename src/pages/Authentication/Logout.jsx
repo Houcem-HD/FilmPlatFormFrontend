@@ -10,9 +10,10 @@ import { useNavigate } from "react-router-dom";
 const Logout = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(logoutUser(history));
+    localStorage.clear();
   }, [dispatch, history]);
 
   return <></>;

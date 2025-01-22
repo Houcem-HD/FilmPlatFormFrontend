@@ -11,11 +11,17 @@ import logoDark from "../../assets/images/logo-dark.png";
 import logoLight from "../../assets/images/logo-light.png";
 import CarouselPage from "./CarouselPage";
 
+
+import axios from "../../plugins/axios";
+import { useNavigate } from 'react-router-dom';
+
 const Login2 = () => {
+  const [error, setError] = useState(null); // Local error state
   const [passwordShow, setPasswordShow] = useState(false);
+  const navigate = useNavigate();
 
   //meta title
-  document.title = "Login 2 | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Login Page";
 
   // Form validation 
   const validation = useFormik({
@@ -23,14 +29,31 @@ const Login2 = () => {
     enableReinitialize: true,
 
     initialValues: {
-      username: '',
+      email: '',
       password: '',
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Please Enter Your Username"),
+      email: Yup.string().required("Please Enter Your Email"),
       password: Yup.string().required("Please Enter Your Password"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post("login", values); // Laravel login endpoint
+        if (response.status === 200 && response.data.token) {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("User", JSON.stringify(response.data.user)); // Store the user data
+          localStorage.setItem("userType", response.data.user.type);
+          navigate("/filmsList");
+        } else {
+          console.error("No token found in the response.");
+        }
+      } catch (err) {
+        if (err.response) {
+          setError(err.response.data.message || "An error occurred"); // Set error message if any
+        } else {
+          setError("An error occurred");
+        }
+      }
     }
   });
   return (
@@ -64,7 +87,7 @@ const Login2 = () => {
                       <div>
                         <h5 className="text-primary">Welcome Back !</h5>
                         <p className="text-muted">
-                          Sign in to continue to Skote.
+                          Sign in and enjoy.
                         </p>
                       </div>
 
@@ -79,19 +102,19 @@ const Login2 = () => {
                           <div className="mb-3">
                             <Label className="form-label">Username</Label>
                             <Input
-                              name="username"
+                              name="email"
                               className="form-control"
-                              placeholder="Enter username"
-                              type="text"
+                              placeholder="Enter email"
+                              type="email"
                               onChange={validation.handleChange}
                               onBlur={validation.handleBlur}
-                              value={validation.values.username || ""}
+                              value={validation.values.email || ""}
                               invalid={
-                                validation.touched.username && validation.errors.username ? true : false
+                                validation.touched.email && validation.errors.email ? true : false
                               }
                             />
-                            {validation.touched.username && validation.errors.username ? (
-                              <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                            {validation.touched.username && validation.errors.email ? (
+                              <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
                             ) : null}
                           </div>
 
@@ -119,21 +142,6 @@ const Login2 = () => {
                               <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
                             ) : null}
                           </div>
-
-                          <div className="form-check">
-                            <Input
-                              type="checkbox"
-                              className="form-check-input"
-                              id="auth-remember-check"
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="auth-remember-check"
-                            >
-                              Remember me
-                            </label>
-                          </div>
-
                           <div className="mt-3 d-grid">
                             <button
                               className="btn btn-primary btn-block "
@@ -182,7 +190,7 @@ const Login2 = () => {
                         <div className="mt-5 text-center">
                           <p>
                             Don&apos;t have an account ? <Link
-                              to="pages-register-2"
+                              to="/register"
                               className="fw-medium text-primary"
                             >
                               Signup now

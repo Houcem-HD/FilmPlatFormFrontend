@@ -10,6 +10,7 @@ import { withTranslation } from "react-i18next";
 
 import { connect } from "react-redux";
 
+
 const Navbar = (props) => {
   const [dashboard, setdashboard] = useState(false);
   const [ui, setui] = useState(false);
@@ -139,7 +140,6 @@ const Navbar = (props) => {
                     </Link>
                   </div>
                 </li>
-
                 <li className="nav-item dropdown">
                   <Link
                     to="/#"

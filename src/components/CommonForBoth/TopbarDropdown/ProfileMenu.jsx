@@ -7,44 +7,46 @@ import {
   DropdownItem,
 } from "reactstrap";
 
-//i18n
+// i18n
 import { withTranslation } from "react-i18next";
 
 // Redux
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import withRouter from "../../Common/withRouter";
-import axios from '../../../plugins/axios';
+
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
 
 const ProfileMenu = (props) => {
-  // Declare a new state variable, which we'll call "menu"
-  const [menu, setMenu] = useState(false);
-
-  const data = localStorage.getItem('authUser');
-  console.log(data);
-  const parsedData = JSON.parse(data);
-  const nameUser = parsedData.name;
-  console.log(nameUser);
-
-  const [username, setusername] = useState(nameUser);
-
+  const [menu, setMenu] = useState(false); // State for dropdown menu
+  
+  const user = localStorage.getItem("User");
+  const parsedUser = JSON.parse(user);
+  const name = parsedUser.name;
+  
+  const [username, setUsername] = useState(name); // Default username
 
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      if (import.meta.env.VITE_APP_DEFAULTAUTH === "firebase") {
-        const obj = JSON.parse(localStorage.getItem("authUser"));
-        setusername(obj.email);
-      } else if (
-        import.meta.env.VITE_APP_DEFAULTAUTH === "fake" ||
-        import.meta.env.VITE_APP_DEFAULTAUTH === "jwt"
-      ) {
-        const obj = JSON.parse(localStorage.getItem("authUser"));
-        setusername(obj.username);
+    const data = localStorage.getItem("authUser");
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data); // Safely parse the data
+        const defaultAuth = import.meta.env.VITE_APP_DEFAULTAUTH;
+
+        if (defaultAuth === "firebase") {
+          setUsername(parsedData?.email || "Guest");
+        } else if (defaultAuth === "fake" || defaultAuth === "jwt") {
+          setUsername(parsedData?.username || "Guest");
+        } else {
+          setUsername(parsedData?.name || "Guest");
+        }
+      } catch (e) {
+        console.error("Error parsing authUser data:", e);
+        setUsername("Guest"); // Fallback for malformed data
       }
     }
-  }, [props.success]);
+  }, [props.success]); // Re-run when `props.success` changes
 
   return (
     <React.Fragment>
@@ -54,7 +56,7 @@ const ProfileMenu = (props) => {
         className="d-inline-block"
       >
         <DropdownToggle
-          className="btn header-item "
+          className="btn header-item"
           id="page-header-user-dropdown"
           tag="button"
         >
@@ -68,9 +70,8 @@ const ProfileMenu = (props) => {
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">
-            {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
-            {props.t("Profile")}{" "}
+            {props.t("Profile")}
           </DropdownItem>
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">

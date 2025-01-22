@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardBody, Col, Row, Container } from "reactstrap";
 import axios from '../../plugins/axios';
 import { useNavigate } from "react-router-dom";
@@ -22,9 +22,39 @@ const FilmForm = () => {
     id_realisateur: ""
   });
 
+  const [categories, setCategories] = useState([]);
+  const [acteurs, setActeurs] = useState([]);
+  const [editeurs, setEditeurs] = useState([]);
+  const [langues, setLangues] = useState([]);
+  const [realisateurs, setRealisateurs] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [categoriesRes, acteursRes, editeursRes, languesRes, realisateursRes] = await Promise.all([
+          axios.get("categorie"),
+          axios.get("acteur"),
+          axios.get("editeur"),
+          axios.get("langue"),
+          axios.get("realisateur")
+        ]);
+
+        setCategories(categoriesRes.data);
+        setActeurs(acteursRes.data);
+        setEditeurs(editeursRes.data);
+        setLangues(languesRes.data);
+        setRealisateurs(realisateursRes.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load dropdown data.");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -150,73 +180,109 @@ const FilmForm = () => {
                   <Row>
                     <Col lg={6}>
                       <label className="form-label">ID Catégorie</label>
-                      <input
+                      <select
                         className="form-control"
-                        type="number"
                         name="id_categorie"
                         value={formData.id_categorie}
                         onChange={handleInputChange}
                         required
-                      />
+                      >
+                        <option value="">Select Category</option>
+                        {categories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.nom}
+                          </option>
+                        ))}
+                      </select>
                     </Col>
                     <Col lg={6}>
                       <label className="form-label">ID Acteur Principal</label>
-                      <input
+                      <select
                         className="form-control"
-                        type="number"
                         name="id_acteur_principal"
                         value={formData.id_acteur_principal}
                         onChange={handleInputChange}
                         required
-                      />
+                      >
+                        <option value="">Select Actor</option>
+                        {acteurs.map((acteur) => (
+                          <option key={acteur.id} value={acteur.id}>
+                            {acteur.nom} {acteur.prenom}
+                          </option>
+                        ))}
+                      </select>
                     </Col>
                   </Row>
                   <Row>
                     <Col lg={6}>
                       <label className="form-label">ID Acteur Secondaire</label>
-                      <input
+                      <select
                         className="form-control"
-                        type="number"
                         name="id_acteur_secondaire"
                         value={formData.id_acteur_secondaire}
                         onChange={handleInputChange}
                         required
-                      />
+                      >
+                        <option value="">Select Actor</option>
+                        {acteurs.map((acteur) => (
+                          <option key={acteur.id} value={acteur.id}>
+                            {acteur.nom} {acteur.prenom}
+                          </option>
+                        ))}
+                      </select>
                     </Col>
                     <Col lg={6}>
                       <label className="form-label">ID Editeur</label>
-                      <input
+                      <select
                         className="form-control"
-                        type="number"
                         name="id_editeur"
                         value={formData.id_editeur}
                         onChange={handleInputChange}
                         required
-                      />
+                      >
+                        <option value="">Select Editor</option>
+                        {editeurs.map((editeur) => (
+                          <option key={editeur.id} value={editeur.id}>
+                            {editeur.nom} {editeur.prenom}
+                          </option>
+                        ))}
+                      </select>
                     </Col>
                   </Row>
                   <Row>
                     <Col lg={6}>
                       <label className="form-label">ID Langue</label>
-                      <input
+                      <select
                         className="form-control"
-                        type="number"
                         name="id_langue"
                         value={formData.id_langue}
                         onChange={handleInputChange}
                         required
-                      />
+                      >
+                        <option value="">Select Language</option>
+                        {langues.map((langue) => (
+                          <option key={langue.id} value={langue.id}>
+                            {langue.langues}
+                          </option>
+                        ))}
+                      </select>
                     </Col>
                     <Col lg={6}>
                       <label className="form-label">ID Réalisateur</label>
-                      <input
+                      <select
                         className="form-control"
-                        type="number"
                         name="id_realisateur"
                         value={formData.id_realisateur}
                         onChange={handleInputChange}
                         required
-                      />
+                      >
+                        <option value="">Select Director</option>
+                        {realisateurs.map((realisateur) => (
+                          <option key={realisateur.id} value={realisateur.id}>
+                            {realisateur.nom}
+                          </option>
+                        ))}
+                      </select>
                     </Col>
                   </Row>
                   <Row>

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 // Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
+import { formatDate } from "@fullcalendar/core/index.js";
 
 const EditUserForm = () => {
     document.title = "Edit User";
@@ -12,8 +13,8 @@ const EditUserForm = () => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        password: "",
-        type: false, // Default to regular user (false)
+        password: "", // Ensure password is always initialized as an empty string
+        type: false, // Default to regular user (0)
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,8 +28,14 @@ const EditUserForm = () => {
         const fetchUserData = async () => {
             try {
                 const response = await axios.get(`users/${id}`); // Fetch user data by ID
+                const data = response.data;
                 if (response.status === 200) {
-                    setFormData(response.data); // Populate form with the fetched data
+                    setFormData({
+                        name: data.name,
+                        email: data.email,
+                        password: data.password || "", // Fallback to an empty string if password is undefined
+                        type: data.type === 1, // Ensure `type` is a boolean
+                    });
                 }
             } catch (err) {
                 setError("Failed to fetch user data. Please try again.");
@@ -42,7 +49,7 @@ const EditUserForm = () => {
         const { name, type, checked, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: type === "checkbox" ? checked : value,
+            [name]: type === "checkbox" ? checked : value, // Correctly update the state for checkbox
         }));
     };
 
@@ -59,7 +66,6 @@ const EditUserForm = () => {
                 setError("Unexpected response from the server.");
             }
         } catch (err) {
-            console.error("Error:", err);
             setError("Failed to update user. Please try again.");
         } finally {
             setIsSubmitting(false);
@@ -115,8 +121,9 @@ const EditUserForm = () => {
                                                     type="password"
                                                     name="password"
                                                     placeholder="Enter password"
-                                                    value={formData.password}
+                                                    value={formData.password} // Ensure password is always defined
                                                     onChange={handleInputChange}
+                                                    required
                                                 />
                                             </div>
                                         </Col>
@@ -128,9 +135,16 @@ const EditUserForm = () => {
                                                         className="form-check-input"
                                                         type="checkbox"
                                                         name="type"
-                                                        value={formData.type} // Ensure checkbox reflects formData.type
-                                                        onChange={handleInputChange} // Ensure checkbox toggle updates formData
+                                                        value={formData.type} // This reflects the state
+                                                        onChange={(e) => {
+                                                            setFormData((prevData) => ({
+                                                                ...prevData,
+                                                                type: e.target.checked, // Update the `type` state with `checked` (true/false)
+                                                            }));
+                                                        }}
                                                     />
+
+
                                                     <label className="form-check-label">
                                                         Admin User
                                                     </label>

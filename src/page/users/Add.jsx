@@ -13,7 +13,7 @@ const UserForm = () => {
         name: "",
         email: "",
         password: "",
-        type: false, // Default to regular user (false)
+        type: 0, // Default to regular user (false)
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,8 +35,12 @@ const UserForm = () => {
         setIsSubmitting(true);
         setError(null);
     
+        if (formData.type){
+            formData.type = 1;
+        }else{
+            formData.type = 0;
+        }
         console.log("Form Data: ", formData); // Log the form data before submitting
-    
         try {
             const response = await axios.post("adduser", formData);
             if (response.status === 201) {

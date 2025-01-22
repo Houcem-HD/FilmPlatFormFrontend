@@ -34,8 +34,8 @@ const Login = () => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: "admin@admin.com" || "",
-      password: "admin@admin.com" || "",
+      email: "hdhoucem@gmail.com" || "",
+      password: "houcemhd" || "",
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your Email"),
@@ -44,19 +44,20 @@ const Login = () => {
     onSubmit: async (values) => {
       try {
         const response = await Axios.post("http://localhost:8000/api/login", values); // Laravel login endpoint
-        console.log("Response Data:", response.data);
+        //console.log("Response Data:", response.data);
         // Store the token or user data if needed
         if (response.status === 200 && response.data.token) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("User", JSON.stringify(response.data.user)); // Store the user data
+          localStorage.setItem("userType", response.data.user.type);
           navigate("/filmsList");
-        }else {
+        } else {
           console.error("No token found in the response.");
         }
       } catch (err) {
         if (err.response) {
           setError(err.response.data.message || "An error occurred"); // Set error message if any
-        }else {
+        } else {
           setError("An error occurred");
         }
       }
